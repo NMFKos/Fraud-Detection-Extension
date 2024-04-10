@@ -1,10 +1,9 @@
 {
-    "manifest_version": 3,
-    "name": "Clipboard Extension",
-    "version": "1.0",
-    "permissions": ["clipboardRead"],
-    "action": {
-        "default_popup": "popup.html"
-    }
+  "manifest_version": 3,
+  "name": "Clipboard Extension",
+  "version": "1.0",
+  "permissions": ["clipboardRead"],
+  "action": {
+      "default_popup": "popup.html"
+  }
 }
-  

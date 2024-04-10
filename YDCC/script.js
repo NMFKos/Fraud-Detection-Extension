@@ -90,7 +90,10 @@ function hasExpressionbetweenChar(text)
 function hasSuspiciousEmail(text)
 {
   const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
-  var email = text.match(emailRegex)[0];
+  var email = text.match(emailRegex);
+  if(!email)
+    return false;
+  var email = email[0];
   console.log(email)
   const specialCharactersRegex = /[!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]+/;
   if (specialCharactersRegex.test(email)) {
