@@ -87,31 +87,62 @@ function hasExpressionbetweenChar(text)
   return false;
 }
 
+function hasSuspiciousEmail(text)
+{
+  const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
+  const email = emailRegex.match(text)
 
-function checkForScam(text){
+  const specialCharactersRegex = /[!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]+/;
+  if (specialCharactersRegex.test(email)) {
+      return true;
+  }
+
+  // Kiểm tra xem địa chỉ email có ký tự khoảng trắng không phù hợp
+  if (email.includes(" ")) {
+      return true;
+  }
+
+  // Kiểm tra xem địa chỉ email có tên miền không phù hợp
+  const domain = email.split("@")[1];
+  const suspiciousDomains = ["example.com", "suspiciousdomain.com"];
+  if (suspiciousDomains.includes(domain)) {
+    return true;
+  }
+  // Nếu không có dấu hiệu nào của một địa chỉ email không chính thống
+  return false;
+}
+
+function checkForScam(){
+  var text = document.getElementById("textArea").value;
   if(hasIcon(text))  
   {
-    return true;
-  } 
-  else if (hasTeencode(text)){
+    alert('This is fraud recruitment!!!!!');
     return true;
   }
-  else if (hasPhone(text)){
-    return true;
-  }
-  else if (hasExpressionbetweenChar(text))
+
+  // if (hasTeencode(text))
+  // {
+  //   alert('This is fraud recruitment!!!!!');
+  //   return true;
+  // }
+  // if (hasPhone(text))
+  // {
+  //   alert('This is fraud recruitment!!!!!');
+  //   return true;
+  // }
+  if (hasExpressionbetweenChar(text))
   {
+    alert('This is fraud recruitment!!!!!');
     return true;
   }
-  else{
-    return false;
+  if(hasSuspiciousEmail(text))
+  {
+    alert('This is fraud recruitment!!!!!');
+    return true;
   }
-
-
-  
-   
-  
-  
-  
-
+  alert('This is not fraud recruitment!!!!!');
+  return false;
 }
+
+
+
