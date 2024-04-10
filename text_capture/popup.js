@@ -34,7 +34,7 @@ function getClipboardContent() {
     // Remove temporary input element
     document.body.removeChild(tempInput);
 }
-
+// Lọc lấy số điện thoại
 function capturePhones(text) {
     let regex = /[0-9]+(\.[0-9]+)*/g;
     let phones = text.match(regex);
@@ -53,7 +53,7 @@ function capturePhones(text) {
         return "Dont have number phone.";
     }
 }
-
+// Lọc lấy tiền lương: 100k, 100.000vnd, 100.000vnđ, 1tr, 1 triệu
 function captureSalarys(text) {
     let regex = /\b(?:\d{1,3}(?:,\d{3})*(?:[.,]\d+)?|[\d.,]+)\s*(?:k|K|vnd|vnđ|tr|triệu)\b/g;
     let salary = text.match(regex);
