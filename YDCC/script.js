@@ -90,8 +90,8 @@ function hasExpressionbetweenChar(text)
 function hasSuspiciousEmail(text)
 {
   const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
-  const email = emailRegex.match(text)
-
+  var email = text.match(emailRegex)[0];
+  console.log(email)
   const specialCharactersRegex = /[!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]+/;
   if (specialCharactersRegex.test(email)) {
       return true;
@@ -130,14 +130,14 @@ function checkForScam(){
   //   alert('This is fraud recruitment!!!!!');
   //   return true;
   // }
-  if (hasExpressionbetweenChar(text))
-  {
-    alert('This is fraud recruitment!!!!!');
-    return true;
-  }
+  // if (hasExpressionbetweenChar(text))
+  // {
+  //   alert('This is fraud EXPRESSION BETWEEN CHAR recruitment!!!!!');
+  //   return true;
+  // }
   if(hasSuspiciousEmail(text))
   {
-    alert('This is fraud recruitment!!!!!');
+    alert('This is fraud EMAIL recruitment!!!!!');
     return true;
   }
   alert('This is not fraud recruitment!!!!!');
