@@ -1,0 +1,10 @@
+{
+    "manifest_version": 3,
+    "name": "Fraud Detection Extension",
+    "version": "1.0",
+    "permissions": ["clipboardRead"],
+    "action": {
+        "default_popup": "extension.html",
+        "default_title": "Fraud Detection Extension"
+    }
+}
