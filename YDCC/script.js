@@ -1,5 +1,3 @@
-document.getElementById("myButton").addEventListener("click", highlightAndCheck);
-
 function highlightAndCheck() {
     let text = document.getElementById('textArea').value;
     let highlightedText = '<span style="background-color: yellow;">' + text + '</span>';
@@ -35,23 +33,21 @@ function hasTeencode(text)
   const vietnameseChars = ['a', 'e', 'i', 'l', 'o', 'h'];
   const teencodeChars = ['4', '3', 'I', '1', '0', 'k'];
 
-  let words = text.split(" ");
+  let words = text.split(/\s+/);
+  let lowercasewords = words.toLowerCase();
   
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
-    for (let j = 0; j < word.length; j++) {
-        const char = word[j];
-        for (let k = 0; k < vietnameseChars.length; k++) {
-            const u = vietnameseChars[k];
-            for (let l = 0; l < teencodeChars.length; l++) {
-                const v = teencodeChars[l];
-                if (char !== u && char === v) {
-                    return true;
-                }
-            }
-        }
+  for (let i = 0; i < lowercasewords.length; i++) {
+    let word = lowercasewords[i];
+    for (let j = 0; i < word.length; j ++){
+      let char = word[j];
+      for (let k = 0; k <= 6; k++)
+      {
+        if (!vietnameseChars[k].includes(char) && teencodeChars[k].includes(char)) {
+          return true;
+      }
     }
-}
+  }
+  }
   return false; 
 }
 
@@ -64,12 +60,11 @@ function hasPhone(text)
                           '092', '056', '058',
                           '099', '059']
   
-  
-  
+  pattern = new RegExp("(^|\\s|:)" + word + "\\b");
   for (let i = 0; i < phoneBeginWith.length; i++)
   {
-    pattern = new RegExp("(^|\\s|:)" + phoneBeginWith[i] + "\\b");
-    if (pattern.test(text)){
+    match = text.match(phoneBeginWith[i]);
+    if (match && pattern.test(match)){
       return true;
     }
   }
@@ -92,10 +87,38 @@ function hasExpressionbetweenChar(text)
   return false;
 }
 
+function checkPreCharge(text) {
+  const preChargeKeywords = [
+      'khoản phí',
+      'đặt cọc',
+      'cọc',
+      'phí bảo lãnh',
+      'phí giữ chỗ',
+      'phí đồng phục',
+  ];
+
+  // Chuyển đổi văn bản thành chữ thường để dễ dàng so sánh
+  const lowercaseText = text.toLowerCase();
+
+  // Kiểm tra xem có từ khóa liên quan đến việc nộp trước khoản phí không
+  for (let i = 0; i < preChargeKeywords.length; i++) {
+      if (lowercaseText.includes(preChargeKeywords[i])) {
+          return true;
+      }
+  }
+
+  // Nếu không tìm thấy bất kỳ từ khóa nào liên quan đến nộp trước khoản phí
+  return false;
+}
+
+
 function hasSuspiciousEmail(text)
 {
   const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
-  var email = text.match(emailRegex)[0];
+  var email = text.match(emailRegex);
+  if(!email)
+    return false;
+  var email = email[0];
   console.log(email)
   const specialCharactersRegex = /[!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]+/;
   if (specialCharactersRegex.test(email)) {
@@ -118,33 +141,44 @@ function hasSuspiciousEmail(text)
 }
 
 
-function checkForScam(text){
+
+function checkForScam(){
+  var text = document.getElementById("textArea").value;
   if(hasIcon(text))  
   {
-    return true;
-  } 
-  else if (hasTeencode(text)){
+    alert('This is fraud recruitment!!!!!');
     return true;
   }
-  else if (hasPhone(text)){
-    return true;
-  }
-  else if (hasExpressionbetweenChar(text))
+
+  if(checkPreCharge(text))
   {
+    alert('This is fraud recruitment!!')
     return true;
   }
-  else if (hasSuspiciousEmail(text)){
+
+  // if (hasTeencode(text))
+  // {
+  //   alert('This is fraud recruitment!!!!!');
+  //   return true;
+  // }
+  // if (hasPhone(text))
+  // {
+  //   alert('This is fraud recruitment!!!!!');
+  //   return true;
+  // }
+  // if (hasExpressionbetweenChar(text))
+  // {
+  //   alert('This is fraud EXPRESSION BETWEEN CHAR recruitment!!!!!');
+  //   return true;
+  // }
+  if(hasSuspiciousEmail(text))
+  {
+    alert('This is fraud EMAIL recruitment!!!!!');
     return true;
   }
-  else{
-    return false;
-  }
-
-
-  
-   
-  
-  
-  
-
+  alert('This is not fraud recruitment!!!!!');
+  return false;
 }
+
+
+
