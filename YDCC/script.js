@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+import { google } from "c:\\YDCC\\YDCC\\node_modules\\googleapis\\build\\src\\index";
 
 document.addEventListener('DOMContentLoaded', function() {
   var getSelectedTextButton = document.getElementById('getSelectedText');
@@ -35,30 +35,30 @@ const auth = new google.auth.GoogleAuth({
   keyFile: "job-scamming-498c16e5fa44.json",
   scopes: "https://www.googleapis.com/auth/spreadsheets",
 });
-// document.addEventListener('DOMContentLoaded', function() {
-//   var getSelectedTextButton = document.getElementById('Report');
-//   var text;
-//   getSelectedTextButton.addEventListener('click', function() {
-//     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-//       for (let i = 0; i < tabs.length; i++) {
-//         if (tabs[i].active) {
-//           chrome.tabs.sendMessage(tabs[i].id, {action: "Report"}, function(response) {
-//             if (response && response.selectedText) {
-//               text = response.selectedText;
-//               (async()=> {
-//                 const writer =  await savetoGoogleSheet(text);
-//                 console.log(writer);
-//               })
-//             } else {
-//               alert("No selected text found.");
-//             }
-//           });
-//           break;
-//         }
-//       }
-//     });
-//    });
-// });
+document.addEventListener('DOMContentLoaded', function() {
+  var getSelectedTextButton = document.getElementById('Report');
+  var text;
+  getSelectedTextButton.addEventListener('click', function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      for (let i = 0; i < tabs.length; i++) {
+        if (tabs[i].active) {
+          chrome.tabs.sendMessage(tabs[i].id, {action: "Report"}, function(response) {
+            if (response && response.selectedText) {
+              text = response.selectedText;
+              (async()=> {
+                const writer =  await savetoGoogleSheet(text);
+                console.log(writer);
+              })
+            } else {
+              alert("No selected text found.");
+            }
+          });
+          break;
+        }
+      }
+    });
+   });
+});
 
 
 function hasIcon(text)
